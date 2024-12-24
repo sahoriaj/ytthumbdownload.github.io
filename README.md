@@ -2,7 +2,7 @@
 
 **Click the links below to download *Pushpa 2* in different resolutions:**
 
-<img src="MV5BNWU1ZWFhNGQtZDhlZC00ZWFlLTlmNmEtN2VmYmZiN2Y5ZmQ2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="Pushpa 2 Image" width="200">
+<img src="Pushpa-2-The-Rule-2024-South-Hindi-Dubbed-Movie-HDRip-(filmyfly.earth).jpg" alt="Pushpa 2 Image" width="200">
 
 ## Download Links:
 
