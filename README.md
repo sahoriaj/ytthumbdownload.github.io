@@ -12,6 +12,6 @@
 
 - 💥 [Download 480p (MediaFire)](your-mediafire-link-480p)
 - 💥 [Download 720p (MediaFire)](your-mediafire-link-720p)
-- 💥 [Download 1080p (MediaFire)](your-mediafire-link-1080p)
+- 💥 [Download 1080p (MediaFire)][(your-mediafire-link-1080p](https://www.mediafire.com/file/9etf9tq701tkubp/Pushpa+2+-+The+Rule+(2024)+(Hindi+ORG.+AAC2.0-192Kbps+++Tamil)+Dual+Audio+UnCut+South+Movie+HDRip+1080p+WEB-DL.mkv/file))
 
 ## Enjoy the Movie! 🍿🎉
