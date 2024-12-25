@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pushpa 2 Downloads</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .container {
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .download-widget {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .download-widget a {
+            display: inline-block;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1rem;
+        }
+        .gdrive {
+            background-color: #34a853;
+        }
+        .mediafire {
+            background-color: #2196f3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Pushpa 2 Downloads</h1>
+    </header>
+    <div class="container">
+        <img src="pushpa2.jpg" alt="Pushpa 2 Movie Poster">
+        <div class="download-widget">
+            <h2>Download Options:</h2>
+            <div>
+                <strong>480p:</strong><br>
+                <a class="gdrive" href="https://drive.google.com/480p-link" target="_blank">Google Drive 📁</a>
+                <a class="mediafire" href="https://www.mediafire.com/480p-link" target="_blank">MediaFire 📁</a>
+            </div>
+            <div>
+                <strong>720p:</strong><br>
+                <a class="gdrive" href="https://drive.google.com/720p-link" target="_blank">Google Drive 📁</a>
+                <a class="mediafire" href="https://www.mediafire.com/720p-link" target="_blank">MediaFire 📁</a>
+            </div>
+            <div>
+                <strong>1080p:</strong><br>
+                <a class="gdrive" href="https://drive.google.com/1080p-link" target="_blank">Google Drive 📁</a>
+                <a class="mediafire" href="https://www.mediafire.com/1080p-link" target="_blank">MediaFire 📁</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Example JavaScript functionality
+        document.querySelectorAll('.download-widget a').forEach(link => {
+            link.addEventListener('click', () => {
+                alert('You are being redirected to ' + link.href);
+            });
+        });
+    </script>
+</body>
+</html>
