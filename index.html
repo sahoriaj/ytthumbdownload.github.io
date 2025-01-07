@@ -131,7 +131,8 @@
     <script>
         function showThumbnail() {
             const videoUrl = document.getElementById('videoUrl').value.trim();
-            const regex = /(?:https?:\/\/)?(?:www\\.)?(?:youtube\\.com\\/[^\\n\\s]+\\?v=|youtu\\.be\\/)([a-zA-Z0-9_-]{11})/;
+
+            const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
             const match = videoUrl.match(regex);
 
             if (match) {
@@ -146,10 +147,8 @@
                 const thumbnailContainer = document.getElementById('thumbnailContainer');
                 const resolutionLinks = document.getElementById('resolutionLinks');
 
-                // Display the max resolution thumbnail by default
                 thumbnailContainer.innerHTML = `<img src="${resolutions['Max Resolution']}" alt="Video Thumbnail">`;
 
-                // Generate download links for all resolutions
                 resolutionLinks.innerHTML = Object.entries(resolutions)
                     .map(([label, url]) => `<a href="${url}" download>${label}</a>`)
                     .join(' ');
