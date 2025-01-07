@@ -129,34 +129,41 @@
     </footer>
 
     <script>
-        function showThumbnail() {
-            const videoUrl = document.getElementById('videoUrl').value.trim();
+function showThumbnail() {
+    const videoUrl = document.getElementById('videoUrl').value.trim();
 
-            const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-            const match = videoUrl.match(regex);
+    // Regex to extract the YouTube video ID
+    const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = videoUrl.match(regex);
 
-            if (match) {
-                const videoId = match[1];
-                const resolutions = {
-                    'Max Resolution': `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
-                    'High Quality': `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
-                    'Medium Quality': `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`,
-                    'Low Quality': `https://img.youtube.com/vi/${videoId}/default.jpg`,
-                };
+    if (match) {
+        const videoId = match[1];
+        const resolutions = {
+            'Max Resolution': `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+            'High Quality': `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+            'Medium Quality': `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`,
+            'Low Quality': `https://img.youtube.com/vi/${videoId}/default.jpg`,
+        };
 
-                const thumbnailContainer = document.getElementById('thumbnailContainer');
-                const resolutionLinks = document.getElementById('resolutionLinks');
+        // Display the thumbnail
+        const thumbnailContainer = document.getElementById('thumbnailContainer');
+        thumbnailContainer.innerHTML = `<img src="${resolutions['Max Resolution']}" alt="Video Thumbnail">`;
 
-                thumbnailContainer.innerHTML = `<img src="${resolutions['Max Resolution']}" alt="Video Thumbnail">`;
-
-                resolutionLinks.innerHTML = Object.entries(resolutions)
-                    .map(([label, url]) => `<a href="${url}" download>${label}</a>`)
-                    .join(' ');
-
-            } else {
-                alert('Invalid YouTube video URL. Please enter a valid URL.');
-            }
-        }
+        // Generate direct download links
+        const resolutionLinks = document.getElementById('resolutionLinks');
+        resolutionLinks.innerHTML = Object.entries(resolutions)
+            .map(([label, url]) => `
+                <p>
+                    <a href="${url}" download="${label.replace(/\s+/g, '_')}.jpg">
+                        Download ${label}
+                    </a>
+                </p>
+            `)
+            .join('');
+    } else {
+        alert('Invalid YouTube video URL. Please enter a valid URL.');
+    }
+}
     </script>
 </body>
 </html>
