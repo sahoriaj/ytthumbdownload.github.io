@@ -202,15 +202,20 @@ function showThumbnail() {
         thumbnailContainer.innerHTML = `<img src="${resolutions['Max Resolution']}" alt="Video Thumbnail">`;
 
         const resolutionLinks = document.getElementById('resolutionLinks');
-        resolutionLinks.innerHTML = Object.entries(resolutions)
-            .map(([label, url]) => `
-                <p>
-                    <a href="${url}" download="${label.replace(/\s+/g, '_')}.jpg">
-                        Download ${label}
-                    </a>
-                </p>
-            `)
-            .join('');
+        resolutionLinks.innerHTML = `
+            <a href="${resolutions['Max Resolution']}" download="Max_Resolution.jpg" style="display: block; margin: 10px 0; padding: 10px; background-color: #007bff; color: white; text-align: center; text-decoration: none; border-radius: 5px;">
+                Download Max Resolution
+            </a>
+            <a href="${resolutions['High Quality']}" download="High_Quality.jpg" style="display: block; margin: 10px 0; padding: 10px; background-color: #007bff; color: white; text-align: center; text-decoration: none; border-radius: 5px;">
+                Download High Quality
+            </a>
+            <a href="${resolutions['Medium Quality']}" download="Medium_Quality.jpg" style="display: block; margin: 10px 0; padding: 10px; background-color: #007bff; color: white; text-align: center; text-decoration: none; border-radius: 5px;">
+                Download Medium Quality
+            </a>
+            <a href="${resolutions['Low Quality']}" download="Low_Quality.jpg" style="display: block; margin: 10px 0; padding: 10px; background-color: #007bff; color: white; text-align: center; text-decoration: none; border-radius: 5px;">
+                Download Low Quality
+            </a>
+        `;
     } else {
         alert('Invalid YouTube video URL. Please enter a valid URL.');
     }
