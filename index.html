@@ -112,6 +112,20 @@
             background-color: #f1f1f1;
             margin-top: 20px;
         }
+
+        section {
+            margin-top: 20px;
+        }
+
+        section h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        section p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
@@ -132,16 +146,42 @@
         <button onclick="showThumbnail()">Show & Download Thumbnail</button>
         <div id="thumbnailContainer" class="thumbnail-container"></div>
         <div id="resolutionLinks" class="download-links"></div>
+
+        <section>
+            <h2>How to Use the YouTube Thumbnail Downloader</h2>
+            <p>This tool allows you to quickly and easily download high-quality thumbnails from YouTube videos. Simply paste the video URL into the input box above, click the "Show & Download Thumbnail" button, and choose the resolution you want to download.</p>
+        </section>
+
+        <section>
+            <h2>Features of This Tool</h2>
+            <p>Our YouTube Thumbnail Downloader provides the following features:</p>
+            <ul>
+                <li>Support for multiple resolutions, including max, high, medium, and low quality.</li>
+                <li>Direct download links for each resolution for convenience.</li>
+                <li>Responsive and user-friendly interface for seamless use on desktop and mobile devices.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Why Use This Tool?</h2>
+            <p>You might want to download a YouTube video thumbnail for various reasons, such as creating a custom design, sharing on social media, or using it for educational purposes. This tool is designed to save you time and provide instant access to thumbnails in the best available quality.</p>
+            <p>In the digital world, having high-quality visuals is essential for creating impactful presentations or social media posts. Thumbnails are often the first impression of your content, and this downloader ensures you have access to the best resolution for your creative projects.</p>
+        </section>
+
+        <section>
+            <h2>Benefits of High-Quality Thumbnails</h2>
+            <p>High-quality thumbnails can enhance the visibility of your content and attract more viewers. They are a crucial element of branding and help in creating a professional look for your projects. With this tool, you no longer need to rely on screenshots or third-party apps to grab thumbnails.</p>
+            <p>By using this downloader, you can ensure that your thumbnails are sharp, clear, and ready to use without any extra effort. It’s a hassle-free solution for content creators, marketers, and educators alike.</p>
+        </section>
     </main>
     <footer>
-        <p>&copy; 2025 Nicky Donghua| All Rights Reserved</p>
+        <p>&copy; 2025 Nicky Donghua | All Rights Reserved</p>
     </footer>
 
     <script>
 function showThumbnail() {
     const videoUrl = document.getElementById('videoUrl').value.trim();
 
-    // Regex to extract the YouTube video ID
     const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
     const match = videoUrl.match(regex);
 
@@ -154,11 +194,9 @@ function showThumbnail() {
             'Low Quality': `https://img.youtube.com/vi/${videoId}/default.jpg`,
         };
 
-        // Display the thumbnail
         const thumbnailContainer = document.getElementById('thumbnailContainer');
         thumbnailContainer.innerHTML = `<img src="${resolutions['Max Resolution']}" alt="Video Thumbnail">`;
 
-        // Generate direct download links
         const resolutionLinks = document.getElementById('resolutionLinks');
         resolutionLinks.innerHTML = Object.entries(resolutions)
             .map(([label, url]) => `
