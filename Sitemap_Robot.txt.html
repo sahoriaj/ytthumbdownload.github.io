@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sitemap & Robot.txt Generator</title>
+    <title>Sitemap & Robots.txt Generator</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -72,12 +72,12 @@
         textarea {
             width: 100%;
             max-width: 600px;
-            height: 200px; /* Adjusted height */
+            height: 200px;
             padding: 10px;
             font-size: 14px;
             border: 1px solid #ddd;
             border-radius: 6px;
-            resize: none; /* Prevent manual resizing */
+            resize: none;
         }
 
         .copy-btn {
@@ -117,6 +117,32 @@
             visibility: visible;
             opacity: 1;
         }
+
+        .description {
+            width: 85%;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .description h2 {
+            font-size: 20px;
+            color: #333;
+            margin-top: 15px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
     </style>
 </head>
 <body>
@@ -135,6 +161,21 @@
             <span class="tooltip">Copied!</span>
         </button>
     </div>
+</div>
+
+<div class="description">
+    <h2>What is Robots.txt?</h2>
+    <p>The robots.txt file is a standard used by websites to communicate with web crawlers and bots. It specifies which parts of a website should be indexed and which should be avoided.</p>
+
+    <h2>Why Use a Robots.txt File?</h2>
+    <p>This file ensures that search engines efficiently crawl your website without overwhelming your server. It also helps protect sensitive data or prevent certain pages from appearing in search results.</p>
+
+    <h2>How Does This Tool Work?</h2>
+    <p>Simply enter your website URL in the input field, and this tool will generate a properly formatted robots.txt file for you, including sitemap links for better search engine indexing.</p>
+</div>
+
+<div class="footer">
+    <p>Created by Sitemap Generator Tool | <a href="https://youtubethumbnaildownloader.work.gd" target="_blank" style="color: #4CAF50;">Visit our website</a></p>
 </div>
 
 <script>
