@@ -216,6 +216,27 @@ function showThumbnail() {
 }
     </script>
 
+         <!-- Content of your website goes here -->
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent">
+        This website uses cookies to ensure you get the best experience. 
+        <a href="/privacy-policy" target="_blank">Learn more</a>
+        <button id="acceptCookies">Got it!</button>
+    </div>
+
+    <script>
+        // Check if cookies have been accepted
+        if (!localStorage.getItem('cookiesAccepted')) {
+            document.getElementById('cookieConsent').style.display = 'block';
+        }
+
+        // Handle cookie acceptance
+        document.getElementById('acceptCookies').addEventListener('click', function() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            document.getElementById('cookieConsent').style.display = 'none';
+        });
+    </script>
     
 </body>
 </html>
