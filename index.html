@@ -217,26 +217,27 @@ function showThumbnail() {
     </script>
 
          <!-- Content of your website goes here -->
+     <!-- Cookie Consent Banner -->
+<div id='cookieConsent' style='position: fixed; bottom: 0; left: 0; right: 0; background-color: #333; color: #fff; padding: 15px 20px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; z-index: 1000;'>
+    <span>
+        We use cookies to improve your experience on our site. By using our site, you consent to cookies. 
+        <a href='https://www.nickydonghua.in.net/2024/11/privacy-policy.html' style='color: #4CAF50; text-decoration: underline;'>Learn more</a>.
+    </span>
+    <button onclick='acceptCookies()' style='background-color: #4CAF50; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px;'>OK</button>
+</div>
 
-    <!-- Cookie Consent Banner -->
-    <div id="cookieConsent">
-        This website uses cookies to ensure you get the best experience. 
-        <a href="/privacy-policy" target="_blank">Learn more</a>
-        <button id="acceptCookies">Got it!</button>
-    </div>
+<script>
+    function acceptCookies() {
+        document.getElementById(&#39;cookieConsent&#39;).style.display = &#39;none&#39;;
+        // Set a cookie to remember the user&#39;s consent
+        document.cookie = &quot;cookieConsent=true; max-age=31536000; path=/&quot;;
+    }
 
-    <script>
-        // Check if cookies have been accepted
-        if (!localStorage.getItem('cookiesAccepted')) {
-            document.getElementById('cookieConsent').style.display = 'block';
-        }
-
-        // Handle cookie acceptance
-        document.getElementById('acceptCookies').addEventListener('click', function() {
-            localStorage.setItem('cookiesAccepted', 'true');
-            document.getElementById('cookieConsent').style.display = 'none';
-        });
-    </script>
+    // Check if the user has already given consent
+    if (document.cookie.split(&#39;;&#39;).some((item) =&gt; item.trim().startsWith(&#39;cookieConsent=&#39;))) {
+        document.getElementById(&#39;cookieConsent&#39;).style.display = &#39;none&#39;;
+    }
+</script>
     
 </body>
 </html>
