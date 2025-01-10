@@ -100,6 +100,7 @@
 </div>
 
 <script>
+    const API_KEY = 'AIzaSyCNye46JEGhDcOV79p6LENXfe0GBUFAebY';  // Replace with your YouTube API key
     let subtitlesData = {};
     let selectedLanguage = '';
 
@@ -114,39 +115,22 @@
             return;
         }
 
-        const url = `https://www.youtube.com/api/timedtext?v=${videoId}&lang=en`;
+        const apiUrl = `https://www.googleapis.com/youtube/v3/captions?videoId=${videoId}&key=${API_KEY}`;
 
         try {
-            const response = await fetch(url);
-            const data = await response.text();
+            const response = await fetch(apiUrl);
+            const data = await response.json();
 
-            if (data.includes('<body>')) {
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(data, "text/xml");
-                const body = xmlDoc.getElementsByTagName('body')[0];
-                let subtitles = '';
+            if (data.items && data.items.length > 0) {
+                // Extract available languages
+                const languages = data.items.map(item => ({
+                    code: item.snippet.language,
+                    label: item.snippet.language
+                }));
 
-                const texts = body.getElementsByTagName('s');
-                for (let i = 0; i < texts.length; i++) {
-                    subtitles += texts[i].textContent + '\n';
-                }
-
-                // Populate subtitle data
-                subtitlesData = { 'en': subtitles }; // Example: 'en' for English subtitles
-                selectedLanguage = 'en';
-
-                // Display subtitles
-                subtitlesContainer.textContent = subtitles || 'No subtitles available for this video.';
-
-                // Show language selection if more languages are available
-                const langOptions = [
-                    { code: 'en', label: 'English' },
-                    { code: 'es', label: 'Spanish' }, // Example of additional languages
-                ];
-
-                // Clear previous options
+                // Populate the language dropdown
                 languageSelect.innerHTML = '';
-                langOptions.forEach(lang => {
+                languages.forEach(lang => {
                     const option = document.createElement('option');
                     option.value = lang.code;
                     option.textContent = lang.label;
@@ -155,6 +139,7 @@
 
                 // Show the language selector and download buttons
                 languagesContainer.style.display = 'block';
+                subtitlesData = data.items;  // Store subtitle data
             } else {
                 subtitlesContainer.textContent = 'No subtitles found or video is unavailable.';
             }
@@ -164,25 +149,34 @@
     }
 
     function downloadSubtitles(format) {
-        const subtitleText = subtitlesData[selectedLanguage];
-        if (!subtitleText) {
-            alert('No subtitles available to download');
+        const subtitleItem = subtitlesData.find(item => item.snippet.language === selectedLanguage);
+        if (!subtitleItem) {
+            alert('No subtitles available for this language');
             return;
         }
 
-        let blob;
-        if (format === 'vtt') {
-            blob = new Blob([convertToVTT(subtitleText)], { type: 'text/vtt' });
-        } else {
-            blob = new Blob([subtitleText], { type: 'text/plain' });
-        }
+        const subtitleUrl = `https://www.googleapis.com/youtube/v3/captions/${subtitleItem.id}?key=${API_KEY}`;
+        
+        fetch(subtitleUrl)
+            .then(response => response.text())
+            .then(data => {
+                let blob;
+                if (format === 'vtt') {
+                    blob = new Blob([convertToVTT(data)], { type: 'text/vtt' });
+                } else {
+                    blob = new Blob([data], { type: 'text/plain' });
+                }
 
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `subtitles.${format}`;
-        a.click();
-        URL.revokeObjectURL(url);
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `subtitles.${format}`;
+                a.click();
+                URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                alert('Failed to download subtitles');
+            });
     }
 
     function convertToVTT(subtitleText) {
@@ -204,7 +198,7 @@
 
     document.getElementById('languageSelect').addEventListener('change', (event) => {
         selectedLanguage = event.target.value;
-        document.getElementById('subtitles').textContent = subtitlesData[selectedLanguage] || 'No subtitles available for this language.';
+        document.getElementById('subtitles').textContent = 'Subtitles will be shown here.';
     });
 </script>
 
