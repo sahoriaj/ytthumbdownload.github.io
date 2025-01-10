@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Subtitle Grabber</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e4e4e4;
+            border-radius: 4px;
+            overflow-y: scroll;
+            height: 200px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .download-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .download-buttons button {
+            width: 48%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>YouTube Subtitle Grabber</h1>
+    <input type="text" id="videoId" placeholder="Enter YouTube Video ID">
+    <button onclick="fetchSubtitles()">Get Subtitles</button>
+    
+    <div id="languages" style="display:none;">
+        <h3>Select Subtitle Language</h3>
+        <select id="languageSelect"></select>
+
+        <div class="download-buttons">
+            <button onclick="downloadSubtitles('vtt')">Download as .vtt</button>
+            <button onclick="downloadSubtitles('txt')">Download as .txt</button>
+        </div>
+    </div>
+
+    <div id="subtitles" class="output"></div>
+</div>
+
+<script>
+    let subtitlesData = {};
+    let selectedLanguage = '';
+
+    async function fetchSubtitles() {
+        const videoId = document.getElementById('videoId').value;
+        const subtitlesContainer = document.getElementById('subtitles');
+        const languageSelect = document.getElementById('languageSelect');
+        const languagesContainer = document.getElementById('languages');
+
+        if (videoId === '') {
+            alert("Please enter a YouTube video ID");
+            return;
+        }
+
+        const url = `https://www.youtube.com/api/timedtext?v=${videoId}&lang=en`;
+
+        try {
+            const response = await fetch(url);
+            const data = await response.text();
+
+            if (data.includes('<body>')) {
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(data, "text/xml");
+                const body = xmlDoc.getElementsByTagName('body')[0];
+                let subtitles = '';
+
+                const texts = body.getElementsByTagName('s');
+                for (let i = 0; i < texts.length; i++) {
+                    subtitles += texts[i].textContent + '\n';
+                }
+
+                // Populate subtitle data
+                subtitlesData = { 'en': subtitles }; // Example: 'en' for English subtitles
+                selectedLanguage = 'en';
+
+                // Display subtitles
+                subtitlesContainer.textContent = subtitles || 'No subtitles available for this video.';
+
+                // Show language selection if more languages are available
+                const langOptions = [
+                    { code: 'en', label: 'English' },
+                    { code: 'es', label: 'Spanish' }, // Example of additional languages
+                ];
+
+                // Clear previous options
+                languageSelect.innerHTML = '';
+                langOptions.forEach(lang => {
+                    const option = document.createElement('option');
+                    option.value = lang.code;
+                    option.textContent = lang.label;
+                    languageSelect.appendChild(option);
+                });
+
+                // Show the language selector and download buttons
+                languagesContainer.style.display = 'block';
+            } else {
+                subtitlesContainer.textContent = 'No subtitles found or video is unavailable.';
+            }
+        } catch (error) {
+            subtitlesContainer.textContent = 'An error occurred while fetching subtitles.';
+        }
+    }
+
+    function downloadSubtitles(format) {
+        const subtitleText = subtitlesData[selectedLanguage];
+        if (!subtitleText) {
+            alert('No subtitles available to download');
+            return;
+        }
+
+        let blob;
+        if (format === 'vtt') {
+            blob = new Blob([convertToVTT(subtitleText)], { type: 'text/vtt' });
+        } else {
+            blob = new Blob([subtitleText], { type: 'text/plain' });
+        }
+
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `subtitles.${format}`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    function convertToVTT(subtitleText) {
+        let vttText = "WEBVTT\n\n";
+        const lines = subtitleText.split('\n');
+        let time = 0;
+
+        lines.forEach(line => {
+            if (line.trim()) {
+                const start = new Date(time * 1000).toISOString().substr(14, 5) + '.000';
+                const end = new Date((time + 2) * 1000).toISOString().substr(14, 5) + '.000';
+                vttText += `${start} --> ${end}\n${line}\n\n`;
+                time += 2; // Increment time for each subtitle
+            }
+        });
+
+        return vttText;
+    }
+
+    document.getElementById('languageSelect').addEventListener('change', (event) => {
+        selectedLanguage = event.target.value;
+        document.getElementById('subtitles').textContent = subtitlesData[selectedLanguage] || 'No subtitles available for this language.';
+    });
+</script>
+
+</body>
+</html>
