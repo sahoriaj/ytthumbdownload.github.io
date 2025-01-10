@@ -90,6 +90,20 @@
             resize: none;
         }
 
+        .copy-btn {
+            display: inline-block;
+            background-color: #008CBA;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
+            background-color: #007B9A;
+        }
+
         .footer {
             text-align: center;
             margin-top: 30px;
@@ -115,6 +129,7 @@
     <div class="code-section" id="codeSection">
         <p>Your robots.txt code is ready! Copy and paste the code below:</p>
         <textarea id="robotsTxtCode" readonly></textarea>
+        <button class="copy-btn" onclick="copyToClipboard()">Copy to Clipboard</button>
     </div>
 </div>
 
@@ -143,6 +158,13 @@ Sitemap: ${websiteUrl}/atom.xml?redirect=false&start-index=501&max-results=500`;
         // Display the code section and set the generated robots.txt code in the textarea
         robotsTxtCode.value = robotsTxtContent;
         codeSection.style.display = 'block';
+    }
+
+    function copyToClipboard() {
+        const textarea = document.getElementById("robotsTxtCode");
+        textarea.select();
+        document.execCommand("copy");
+        alert("Robots.txt code copied to clipboard!");
     }
 </script>
 
