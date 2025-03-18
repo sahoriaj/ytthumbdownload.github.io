@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<title>Streaming Episode Input</title>
+<link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
+<style type='text/tailwindcss'>/*<![CDATA[*/
+    /* Class based dark mode */
+    @variant dark (&:where(.dark, .dark *));
+  
+  
+  /*]]>*/</style>
+  
+</head>
+<body>
+<div class="min-w-screen relative flex min-h-screen flex-col-reverse text-black md:flex-row" id="streaming-container">
+    <div class="w-full">
+        <div class="flex min-h-screen grow flex-col items-center">
+            <!---->
+            <div class="m-2 rounded-lg">
+                <!----><!----><!---->
+                
+                <div>
+                    <div class="relative flex rounded-lg border border-2 border-t-[2rem] border-(--duller) bg-(--bg) p-8 text-clear shadow-2xl dark:border-dduller dark:bg-dbg dark:text-dclear">
+                        <div class="absolute -top-5 left-2 ml-2 flex space-x-2">
+                            <div class="h-3 w-3 rounded-full bg-(--bg-focus) dark:bg-(--dbg-focus)"></div>
+                            <div class="h-3 w-3 rounded-full bg-(--bg-focus) dark:bg-(--dbg-focus)"></div>
+                            <div class="h-3 w-3 rounded-full bg-(--bg-focus) dark:bg-(--dbg-focus)"></div>
+                        </div>
+
+                        <div class="ml-8 grid auto-rows-min grid-cols-2">
+                            
+                            <div>
+                            <h1 class="w-fit text-2xl rounded-full bg-(--bg-focus) px-4 py-1 font-bold text-(--dull) dark:text-(--ddull)" id="streaming-title"></h1>
+                            <div class="mt-4 flex font-medium text-(--primary-visible) dark:text-(--dprimary-visible) rounded-xl bg-gradient-to-r from-(--primary-clear) to-(--primary-dull) p-6 shadow-inner dark:bg-(--dprimary-clear)">
+                                
+                                <div id="config-form" class="grid gap-2">
+                                    <label class="grid items-center gap-3 grid-cols-[120px_1fr]"><span>Streaming ID:</span> <input class="bg-(--bg-focus) rounded-xl px-3 py-1" type="text" id="streaming-id" value="Solo Leveling"></label>
+                                    <label class="grid items-center gap-3 grid-cols-[120px_1fr]"><span>Post ID:</span> <input class="bg-(--bg-focus) rounded-xl px-3 py-1" type="text" id="post-id" value="2787061011751067902"></label>
+                                    <label class="grid items-center gap-3 grid-cols-[120px_1fr]"><span>Max Episode:</span> <input class="bg-(--bg-focus) rounded-xl px-3 py-1" type="number" id="max-episode" value="12" min="1"></label>
+
+                                    <button class="px-3 py-1 bg-(--accent-dull) cursor-pointer rounded-xl mt-2" onclick="updateConfig()">Update Konfigurasi</button>
+                                </div>
+                                
+                            </div>
+                            <div class="mt-4 rounded-xl bg-(--bg-focus) p-6 shadow-inner dark:bg-(--dbg-focus) dark:text-dclear">
+
+                                <form id="streaming-form">
+                                    <h3>Tambah/Update Episode</h3>
+                                    <div id="resolution-inputs">
+                                        <div class="resolution-group grid gap-2">
+                                            <label class="grid items-center gap-3 grid-cols-[120px_1fr]"><span>Server:</span> <input type="text" class="bg-(--accent-dull) rounded-xl px-3 py-1" placeholder="e.g. Gdrive 480p" required></label>
+                                            <label class="grid items-center gap-3 grid-cols-[120px_1fr]"><span>URL:</span> <input type="url" class="bg-(--accent-dull) rounded-xl px-3 py-1" placeholder="Streaming embed URL" required></label>
+                                            <label class="grid items-center gap-3 grid-cols-[120px_1fr]"><span>Bahasa:</span> 
+                                                <select class="language-input" required>
+                                                    <option value="sub">sub</option>
+                                                    <option value="dub">dub</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <button class="px-3 py-1 bg-(--accent-dull) cursor-pointer rounded-xl mt-2" type="button" onclick="addResolutionInput()">+ Tambah Resolusi</button><br><br>
+                                    <div class="grid gap-2">
+
+                                    <label class="grid items-center gap-3 grid-cols-[120px_1fr]"><span>Judul:</span> <input class="bg-(--accent-dull) rounded-xl px-3 py-1" type="text" id="title" required></label>
+                                    <label class="grid items-center gap-3 grid-cols-[120px_1fr]"><span>Episode:</span> 
+                                        <input class="bg-(--accent-dull) rounded-xl px-3 py-1" type="number" 
+                                                id="episode" 
+                                                required 
+                                                min="1" 
+                                                onchange="validateEpisodeInput(this)"
+                                                oninput="validateEpisodeInput(this)">
+                                        <span class="validation-message" id="episode-validation">Episode harus antara 1 - 12</span>
+                                    </label>
+                                </div>
+                                    <br>
+                                    <button 
+                                        class="px-3 py-1 bg-(--accent-dull) cursor-pointer rounded-xl mt-2 text-(--primary-visible) dark:text-(--dprimary-visible) hover:bg-(--accent)" 
+                                        type="submit" 
+                                        id="submit-episode">
+                                        Tambah Episode
+                                    </button>
+                                </form>
+                                
+                        
+                            </div>
+                            </div>
+                            <div class="ml-4 mt-10 rounded-lg bg-(--bg) dark:bg-(--dbg-focus)">
+                            <div id="episodes-list" class="max-h-100 overflow-scroll"></div>
+                            <div id="history-controls" class="mt-4 flex gap-4 rounded-lg bg-(--bg-focus) p-4">
+                                <button onclick="clearHistory()" class="h-[6.2rem] cursor-pointer p-3 rounded-lg !bg-(--primary-clear) dark:bg-(--dprimary-clear)"><p class="text-medium mb-4 text-center text-xs text-(--primary-visible) dark:text-(--dprimary-visible)">Clear <br> History</p>
+                                    <span class="material-symbols-rounded rounded-full h-6 rounded-full block grid place-content-center bg-(--bg-focus) text-left text-(--clear) dark:bg-(--dbg-focus) dark:text-(--dclear)"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg></span></button>
+
+                                <button onclick="exportHistory()" class="h-[6.2rem] cursor-pointer p-3 rounded-lg !bg-(--primary-clear) dark:bg-(--dprimary-clear)"><p class="text-medium mb-4 text-center text-xs text-(--primary-visible) dark:text-(--dprimary-visible)">Export<br> History</p>
+                                    <span class="material-symbols-rounded rounded-full h-6 rounded-full block grid place-content-center bg-(--bg-focus) text-left text-(--clear) dark:bg-(--dbg-focus) dark:text-(--dclear)"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                    </svg></span></button>
+
+                                    <button onclick="document.getElementById('importFile').click()" class="h-[6.2rem] cursor-pointer p-3 rounded-lg !bg-(--primary-clear) dark:bg-(--dprimary-clear)"><p class="text-medium mb-4 text-center text-xs text-(--primary-visible) dark:text-(--dprimary-visible)">Import<br> History</p>
+                                        <span class="material-symbols-rounded rounded-full h-6 rounded-full block grid place-content-center bg-(--bg-focus) text-left text-(--clear) dark:bg-(--dbg-focus) dark:text-(--dclear)"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                                        </svg></span></button>
+
+                                    <input type="file" id="importFile" style="display: none;" onchange="importHistory(event)">
+                                
+                                
+                            </div>
+                            </div>
+                        
+                            <textarea class="col-span-2 mt-4 flex items-center justify-center rounded-lg bg-(--bg-focus) p-6 shadow-inner dark:bg-(--dbg-focus)" id="output" readonly></textarea>
+                            
+                        
+                            <button class="px-3 py-1 bg-(--accent-dull) cursor-pointer rounded-xl mt-2" onclick="copyOutput()">Copy</button>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <!----><!----><!----><!----><!---->
+                
+            </div>
+            <!---->
+        </div>
+    </div>
+    <app-sidebar-r>
+        <!---->
+    </app-sidebar-r>
+    </div>
+    
+
+<script src="script.js"></script>
+</body>
+</html>
