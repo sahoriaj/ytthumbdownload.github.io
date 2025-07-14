@@ -1,560 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HomePal SEO - Smart Tools for Bloggers</title>
-    <style>
-        :root {
-            --primary: #4361ee;
-            --secondary: #3f37c9;
-            --accent: #4cc9f0;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --success: #4caf50;
-            --font-main: 'Poppins', sans-serif;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: var(--font-main);
-            line-height: 1.6;
-            color: var(--dark);
-            background-color: var(--light);
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            background-color: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-        
-        .logo-icon {
-            margin-right: 10px;
-            font-size: 28px;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.3s;
-        }
-        
-        .btn:hover {
-            background-color: var(--secondary);
-        }
-        
-        .hero {
-            padding: 80px 0;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7ec 100%);
-        }
-        
-        .hero-content {
-            flex: 1;
-            padding-right: 40px;
-        }
-        
-        .hero-image {
-            flex: 1;
-            text-align: center;
-        }
-        
-        .hero h1 {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--dark);
-        }
-        
-        .hero p {
-            font-size: 18px;
-            margin-bottom: 30px;
-            color: #555;
-        }
-        
-        .features {
-            padding: 80px 0;
-            background-color: white;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 36px;
-            color: var(--dark);
-            margin-bottom: 15px;
-        }
-        
-        .section-title p {
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-        
-        .feature-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .feature-icon {
-            font-size: 40px;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-        
-        .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .feature-card p {
-            color: #666;
-        }
-        
-        .tools {
-            padding: 80px 0;
-            background-color: #f9f9f9;
-        }
-        
-        .tool-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .tool-card {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .tool-image {
-            height: 200px;
-            background-color: #eee;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 50px;
-        }
-        
-        .tool-content {
-            padding: 25px;
-        }
-        
-        .tool-content h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .tool-content p {
-            color: #666;
-            margin-bottom: 20px;
-        }
-        
-        .testimonials {
-            padding: 80px 0;
-            background-color: white;
-        }
-        
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-        
-        .testimonial-card {
-            background-color: var(--light);
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .testimonial-text {
-            font-style: italic;
-            margin-bottom: 20px;
-            color: #555;
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-        }
-        
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #ddd;
-            margin-right: 15px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-weight: bold;
-        }
-        
-        .author-info h4 {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-        
-        .author-info p {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .cta {
-            padding: 80px 0;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            text-align: center;
-        }
-        
-        .cta h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-        
-        .cta p {
-            max-width: 700px;
-            margin: 0 auto 30px;
-            font-size: 18px;
-        }
-        
-        .btn-light {
-            background-color: white;
-            color: var(--primary);
-        }
-        
-        .btn-light:hover {
-            background-color: #f0f0f0;
-        }
-        
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 60px 0 30px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        .footer-column h3 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: white;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-links a {
-            color: #aaa;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: white;
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid #444;
-            color: #aaa;
-        }
-        
-        @media (max-width: 768px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .hero-content {
-                padding-right: 0;
-                margin-bottom: 40px;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coco Anime</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #1e1e1e;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      background: #111;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .search-bar {
+      flex-grow: 1;
+      margin: 0 20px;
+      max-width: 300px;
+      position: relative;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 8px 15px;
+      border-radius: 20px;
+      border: none;
+      outline: none;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .btn-signup {
+      background-color: #ff522d;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .menu-icon {
+      margin-left: 15px;
+      width: 30px;
+      height: 2px;
+      background-color: white;
+      position: relative;
+    }
+
+    .menu-icon::before,
+    .menu-icon::after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 2px;
+      background: white;
+      left: 0;
+    }
+
+    .menu-icon::before {
+      top: -8px;
+    }
+
+    .menu-icon::after {
+      top: 8px;
+    }
+
+    .main {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 40px;
+      background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgkFSWeqBwHSSfCa_-ystxIPummkrPuI84gf9_2UUqgtSIgSPVUZn-0nWPIE259MKP1NsQvSCr4Vwvv8RwPceeM3kwOAEdjPuhkT0tT6ir-vNARYX73r9PTNfbbBx02o7iyKJW3w_HQWL_Jsc6UPo5mhncCWbNiKoJszeFTbnDwrsiv19ie62Mvx9xt6Ec/s320/1000097525.jpg');
+      background-size: cover;
+      background-position: center right;
+      background-repeat: no-repeat;
+      min-height: 600px;
+      color: #fff;
+    }
+
+    .main h1 {
+      font-size: 48px;
+      max-width: 500px;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .main p {
+      color: #ff8f6c;
+      font-weight: 500;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .btn-primary {
+      background-color: #ff522d;
+      padding: 12px 30px;
+      border-radius: 25px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      color: white;
+    }
+
+    .btn-secondary {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 12px 30px;
+      border-radius: 25px;
+      border: 1px solid #999;
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .main h1 {
+        font-size: 32px;
+      }
+
+      .main {
+        padding: 40px 20px;
+        background-position: center;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <span class="logo-icon">🔍</span>
-                HomePal SEO
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="tools.html">Tools</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="pricing.html">Pricing</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="login.html" class="btn">Login</a></li>
-            </ul>
-        </div>
-    </nav>
+  <div class="container">
+    <div class="header">
+      <div class="logo">Coco Anime</div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search" />
+      </div>
+      <button class="btn-signup">Sign up</button>
+      <div class="menu-icon"></div>
+    </div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Boost Your Blog's SEO With Smart Tools</h1>
-                <p>HomePal SEO provides easy-to-use tools for bloggers to improve search rankings, analyze content, and grow their audience organically.</p>
-                <a href="signup.html" class="btn">Get Started Free</a>
-            </div>
-            <div class="hero-image">
-                <img src="/api/placeholder/500/400" alt="SEO Dashboard" />
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Why Choose HomePal SEO?</h2>
-                <p>Our platform is specifically designed for bloggers who want professional SEO tools without the complexity.</p>
-            </div>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🚀</div>
-                    <h3>Easy to Use</h3>
-                    <p>Intuitive interface designed for bloggers, not SEO experts. Get started in minutes with no learning curve.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Actionable Insights</h3>
-                    <p>Get clear recommendations and performance metrics that actually help improve your content.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💰</div>
-                    <h3>Affordable Plans</h3>
-                    <p>Premium SEO tools at blogger-friendly prices, with a generous free tier to get you started.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Tools Section -->
-    <section class="tools">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Powerful SEO Tools</h2>
-                <p>Everything you need to optimize your blog for search engines and grow your audience organically.</p>
-            </div>
-            <div class="tool-grid">
-                <div class="tool-card">
-                    <div class="tool-image">📝</div>
-                    <div class="tool-content">
-                        <h3>Content Analyzer</h3>
-                        <p>Get real-time SEO feedback as you write to ensure your content ranks well.</p>
-                        <a href="content-analyzer.html" class="btn">Learn More</a>
-                    </div>
-                </div>
-                <div class="tool-card">
-                    <div class="tool-image">🔍</div>
-                    <div class="tool-content">
-                        <h3>Keyword Explorer</h3>
-                        <p>Find the perfect keywords that your audience is searching for.</p>
-                        <a href="keyword-explorer.html" class="btn">Learn More</a>
-                    </div>
-                </div>
-                <div class="tool-card">
-                    <div class="tool-image">📈</div>
-                    <div class="tool-content">
-                        <h3>Rank Tracker</h3>
-                        <p>Monitor your search rankings and track progress over time.</p>
-                        <a href="rank-tracker.html" class="btn">Learn More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>What Our Users Say</h2>
-                <p>Join thousands of bloggers who've improved their search rankings with HomePal SEO.</p>
-            </div>
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"Since using HomePal SEO, my organic traffic has increased by 157%. The content analyzer helps me write better blog posts that actually rank."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">JM</div>
-                        <div class="author-info">
-                            <h4>Jamie Miller</h4>
-                            <p>Travel Blogger</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"The keyword explorer helped me find niche topics with high search volume but low competition. Game changer for my food blog!"</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SK</div>
-                        <div class="author-info">
-                            <h4>Sarah Kim</h4>
-                            <p>Food Blogger</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"As a tech blogger, I need SEO tools that keep up with algorithm changes. HomePal SEO is constantly updated and has all the features I need."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">RP</div>
-                        <div class="author-info">
-                            <h4>Raj Patel</h4>
-                            <p>Tech Blogger</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <h2>Ready to Boost Your Blog's SEO?</h2>
-            <p>Join thousands of bloggers who use HomePal SEO to improve their search rankings and grow their audience organically.</p>
-            <a href="signup.html" class="btn btn-light">Get Started Free</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>HomePal SEO</h3>
-                    <p>Smart SEO tools for bloggers to improve search rankings and grow their audience organically.</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Tools</h3>
-                    <ul class="footer-links">
-                        <li><a href="content-analyzer.html">Content Analyzer</a></li>
-                        <li><a href="keyword-explorer.html">Keyword Explorer</a></li>
-                        <li><a href="rank-tracker.html">Rank Tracker</a></li>
-                        <li><a href="backlink-checker.html">Backlink Checker</a></li>
-                        <li><a href="site-audit.html">Site Audit</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul class="footer-links">
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="guides.html">Guides</a></li>
-                        <li><a href="webinars.html">Webinars</a></li>
-                        <li><a href="case-studies.html">Case Studies</a></li>
-                        <li><a href="help-center.html">Help Center</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul class="footer-links">
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="pricing.html">Pricing</a></li>
-                        <li><a href="careers.html">Careers</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="affiliate.html">Affiliate Program</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 HomePal SEO. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <div class="main">
+      <h1>The only anime platform you will ever need</h1>
+      <p>Kimetsu No Yaiba: The Movie: Mugen Train →</p>
+      <div class="buttons">
+        <button class="btn-primary">Sign up</button>
+        <button class="btn-secondary">Watch now</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
