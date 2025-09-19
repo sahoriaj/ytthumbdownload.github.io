@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Post Series Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 700px; margin: auto; }
+    label { display: block; margin-top: 10px; font-weight: bold; }
+    input, textarea { width: 100%; padding: 8px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
+    button { margin-top: 15px; padding: 10px 15px; background: #2b6cb0; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #2c5282; }
+    pre { background: #f4f4f4; padding: 10px; border-radius: 5px; margin-top: 15px; white-space: pre-wrap; word-wrap: break-word; }
+  </style>
+</head>
+<body>
+  <h2>Post Series Generator</h2>
+  
+  <label>Image URL:</label>
+  <input type="text" id="imageUrl" placeholder="https://example.com/image.jpg">
+
+  <label>Title:</label>
+  <input type="text" id="title" placeholder="Enter series title">
+
+  <label>Synopsis:</label>
+  <textarea id="synopsis" rows="5" placeholder="Enter synopsis text"></textarea>
+
+  <button onclick="generateCode()">Generate Code</button>
+
+  <h3>Generated Code:</h3>
+  <pre id="output"></pre>
+
+  <script>
+    function generateCode() {
+      const imageUrl = document.getElementById("imageUrl").value.trim();
+      const title = document.getElementById("title").value.trim();
+      const synopsis = document.getElementById("synopsis").value.trim();
+
+      const code = `<!-- [Thumbnail] -->
+<div class="separator" style="clear: both; text-align: center;">
+  <img src="${imageUrl}" alt="${title} Thumbnail" />
+</div>
+
+<!-- [Synopsis] -->
+<div class="bixbox">
+  <h2 class="heading">Sinopsis ${title}</h2>
+  <div class="sinoposis">
+    <p>
+      ${synopsis}
+    </p>
+  </div>
+</div>
+
+<span><!--more--></span>`;
+
+      document.getElementById("output").textContent = code;
+    }
+  </script>
+</body>
+</html>
